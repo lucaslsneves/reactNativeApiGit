@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
+import { ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, Form, Input, SubmitButton } from './styles';
+import {
+  Container,
+  Form,
+  Input,
+  SubmitButton,
+  List,
+  User,
+  Avatar,
+  Name,
+  Bio,
+  ProfileButton,
+  ProfileButtonText,
+} from './styles';
 import api from '../../services/api';
 
 export default class Main extends Component {
@@ -40,11 +53,30 @@ export default class Main extends Component {
             placeholder="Adicionar usuário"
             placeholderTextColor="#666"
             onChangeText={text => this.setState({ newUser: text })}
+            value={newUser}
           />
-          <SubmitButton onPress={this.handleAddUser}>
-            <Icon name="add" color="#fff" size={20} />
+          <SubmitButton loading={loading} onPress={this.handleAddUser}>
+            {loading ? (
+              <ActivityIndicator color="#fff" size={20} />
+            ) : (
+              <Icon name="add" color="#fff" size={20} />
+            )}
           </SubmitButton>
         </Form>
+        <List
+          data={users}
+          keyExtractor={user => user.login}
+          renderItem={({ item }) => (
+            <User>
+              <Avatar source={{ uri: item.avatar }} />
+              <Name>{item.name}</Name>
+              <Bio>{item.bio}</Bio>
+              <ProfileButton>
+                <ProfileButtonText>Ver perfil</ProfileButtonText>
+              </ProfileButton>
+            </User>
+          )}
+        />
       </Container>
     );
   }
