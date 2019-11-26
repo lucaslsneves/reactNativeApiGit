@@ -9,22 +9,24 @@ export default class Main extends Component {
     loading: false,
   };
 
-  return (
-    <Container>
-      <Form>
-        <Input
-          autoCorrect={false}
-          autoCapitalize="none"
-          placeholder="Adicionar usuário"
-          placeholderTextColor="#666"
-          onChangeText={text => this.setState({ newUser: text })}
-        />
-        <SubmitButton>
-          <Icon name="add" color="#fff" size={20} />
-        </SubmitButton>
-      </Form>
-    </Container>
-  );
+  render() {
+    return (
+      <Container>
+        <Form>
+          <Input
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Adicionar usuário"
+            placeholderTextColor="#666"
+            onChangeText={text => this.setState({ newUser: text })}
+          />
+          <SubmitButton>
+            <Icon name="add" color="#fff" size={20} />
+          </SubmitButton>
+        </Form>
+      </Container>
+    );
+  }
 }
 
 Main.navigationOptions = {
