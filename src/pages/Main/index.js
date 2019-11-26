@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   Container,
   Form,
@@ -23,9 +24,20 @@ export default class Main extends Component {
     loading: false,
   };
 
-  componetDidMount(_, prevState) {}
+  async componentDidMount() {
+    const users = await AsyncStorage.getItem('users');
 
-  componentDidUpdate(_, prevState) {}
+    if (users) {
+      this.setState({ users: JSON.parse(users) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { users } = this.state;
+    if (prevState.users !== users) {
+      AsyncStorage.setItem('users', JSON.stringify(users));
+    }
+  }
 
   handleAddUser = async () => {
     const { newUser, users } = this.state;
