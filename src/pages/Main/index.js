@@ -23,6 +23,10 @@ export default class Main extends Component {
     loading: false,
   };
 
+  componetDidMount(_, prevState) {}
+
+  componentDidUpdate(_, prevState) {}
+
   handleAddUser = async () => {
     const { newUser, users } = this.state;
     this.setState({ loading: true });
