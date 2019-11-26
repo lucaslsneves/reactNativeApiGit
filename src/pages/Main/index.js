@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
@@ -18,6 +19,16 @@ import {
 import api from '../../services/api';
 
 export default class Main extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }).isRequired,
+  };
+
+  static navigationOptions = {
+    title: 'Usuários',
+  };
+
   state = {
     newUser: '',
     users: [],
@@ -103,7 +114,3 @@ export default class Main extends Component {
     );
   }
 }
-
-Main.navigationOptions = {
-  title: 'Usuários',
-};

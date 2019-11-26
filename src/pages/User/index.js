@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 
 // import { Container } from './styles';
 
-export default function User() {
-  return <View />;
+export default class User extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam('user').name,
+  });
+
+  render() {
+    return <View />;
+  }
 }

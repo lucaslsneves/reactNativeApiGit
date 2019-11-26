@@ -35,6 +35,7 @@ module.exports = {
     'import/prefer-default-export':'off',
     'react/prefer-stateless-function':'off',
     'react/state-in-constructor': 'off',
-    'react/sort-comp':'off'
+    'react/sort-comp':'off',
+    'react/static-property-placement':'off'
   },
 };
