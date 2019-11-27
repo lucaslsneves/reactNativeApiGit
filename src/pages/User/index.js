@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import api from '../../services/api';
 import {
   Container,
@@ -32,6 +32,7 @@ export default class User extends Component {
     stars: [],
     loading: false,
     page: 1,
+    loadingList: false,
   };
 
   async componentDidMount() {
@@ -51,16 +52,32 @@ export default class User extends Component {
     const { page, stars } = this.state;
     const { navigation } = this.props;
     const user = navigation.getParam('user');
+    this.setState({ loadingList: true });
     const newStars = await api.get(
       `/users/${user.login}/starred?page=${page}&per_page=4`
     );
-    this.setState({ stars: [...stars, ...newStars.data] });
+    this.setState({ stars: [...stars, ...newStars.data], loadingList: false });
   };
 
   handleLoadMore = () => {
     console.log('fui chamada');
     const { page } = this.state;
     this.setState({ page: page + 1 }, this.getData);
+  };
+
+  renderFooter = () => {
+    const { loadingList } = this.state;
+    return loadingList ? (
+      <View
+        styles={{
+          marginTop: 5,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator color="#7159c1" size="large" />
+      </View>
+    ) : null;
   };
 
   render() {
@@ -82,6 +99,7 @@ export default class User extends Component {
           </ContainerLoading>
         ) : (
           <Stars
+            extraData={this.state}
             data={stars}
             keyExtractor={star => String(star.id)}
             renderItem={({ item }) => (
@@ -95,7 +113,7 @@ export default class User extends Component {
             )}
             onEndReached={this.handleLoadMore}
             onEndReachedThreshold={0.01}
-
+            ListFooterComponent={this.renderFooter}
           />
         )}
       </Container>
