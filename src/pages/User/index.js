@@ -43,6 +43,8 @@ export default class User extends Component {
     this.setState({ stars: response.data, loading: false });
   }
 
+  handleLoadMore = () => console.warn('HandleLoadMore');
+
   render() {
     const { stars, loading } = this.state;
     const { navigation } = this.props;
@@ -73,6 +75,8 @@ export default class User extends Component {
                 </Info>
               </Starred>
             )}
+            onEndReached={this.handleLoadMore}
+            onEndReachedThreshold={0}
           />
         )}
       </Container>
